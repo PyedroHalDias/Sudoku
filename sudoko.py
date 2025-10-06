@@ -91,7 +91,26 @@ def Coluna_Escolhida(tabuleiro_data, x):
         coluna_sorteada.append(tabuleiro_data[n][x])
     return coluna_sorteada
 
-def Quadrante_Selecionado
+def Quadrante_Selecionado(tabuleiro_data, x, y):
+    quadrante =[]
+    if x >= 0 and x <= 2 and y >= 0 and y <= 2:
+        quadrante.extend([                   ])
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 
 while True:
     for event in pg.event.get():
