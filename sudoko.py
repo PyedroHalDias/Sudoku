@@ -92,26 +92,186 @@ def Coluna_Escolhida(tabuleiro_data, x):
     return coluna_sorteada
 
 def Quadrante_Selecionado(tabuleiro_data, x, y):
-    quadrante =[]
+    quadrante = []
     if x >= 0 and x <= 2 and y >= 0 and y <= 2:
-        quadrante.extend([                   ])
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        quadrante.extend([tabuleiro_data[0][0], tabuleiro_data[0][1], tabuleiro_data[0][2],
+                         tabuleiro_data[1][0], tabuleiro_data[1][1], tabuleiro_data[1][2],
+                         tabuleiro_data[2][0], tabuleiro_data[2][1], tabuleiro_data[2][2]])
+    if x >= 3 and x <= 5 and y >= 0 and y <= 2:
+        quadrante.extend([tabuleiro_data[0][3], tabuleiro_data[0][4], tabuleiro_data[0][5],
+                          tabuleiro_data[1][3], tabuleiro_data[1][4], tabuleiro_data[1][5],
+                          tabuleiro_data[2][3], tabuleiro_data[2][4], tabuleiro_data[2][5]])
+    if x >= 6 and x <= 8 and y >= 0 and y <= 2:
+        quadrante.extend([tabuleiro_data[0][6], tabuleiro_data[0][7], tabuleiro_data[0][8],
+                          tabuleiro_data[1][6], tabuleiro_data[1][7], tabuleiro_data[1][8],
+                          tabuleiro_data[2][6], tabuleiro_data[2][7], tabuleiro_data[2][8]])
+    if x >= 0 and x <= 2 and y >= 3 and y <= 5:
+        quadrante.extend([tabuleiro_data[3][0], tabuleiro_data[3][1], tabuleiro_data[3][2],
+                          tabuleiro_data[4][0], tabuleiro_data[4][1], tabuleiro_data[4][2],
+                          tabuleiro_data[5][0], tabuleiro_data[5][1], tabuleiro_data[5][2]])
+    if x >= 3 and x <= 5 and y >= 3 and y <= 5:
+        quadrante.extend([tabuleiro_data[3][3], tabuleiro_data[3][4], tabuleiro_data[3][5],
+                          tabuleiro_data[4][3], tabuleiro_data[4][4], tabuleiro_data[4][5],
+                          tabuleiro_data[5][3], tabuleiro_data[5][4], tabuleiro_data[5][5]])
+    if x >= 6 and x <= 8 and y >= 3 and y <= 5:
+        quadrante.extend([tabuleiro_data[3][6], tabuleiro_data[3][7], tabuleiro_data[3][8],
+                          tabuleiro_data[4][6], tabuleiro_data[4][7], tabuleiro_data[4][8],
+                          tabuleiro_data[5][6], tabuleiro_data[5][7], tabuleiro_data[5][8]])
+    if x >= 0 and x <= 2 and y >= 6 and y <= 8:
+        quadrante.extend([tabuleiro_data[6][0], tabuleiro_data[6][1], tabuleiro_data[6][2],
+                          tabuleiro_data[7][0], tabuleiro_data[7][1], tabuleiro_data[7][2],
+                          tabuleiro_data[8][0], tabuleiro_data[8][1], tabuleiro_data[8][2]])
+    if x >= 3 and x <= 5 and y >= 6 and y <= 8:
+        quadrante.extend([tabuleiro_data[6][3], tabuleiro_data[6][4], tabuleiro_data[6][5],
+                          tabuleiro_data[7][3], tabuleiro_data[7][4], tabuleiro_data[7][5],
+                          tabuleiro_data[8][3], tabuleiro_data[8][4], tabuleiro_data[8][5]])
+    if x >= 6 and x <= 8 and y >= 6 and y <= 8:
+        quadrante.extend([tabuleiro_data[6][6], tabuleiro_data[6][7], tabuleiro_data[6][8],
+                          tabuleiro_data[7][6], tabuleiro_data[7][7], tabuleiro_data[7][8],
+                          tabuleiro_data[8][6], tabuleiro_data[8][7], tabuleiro_data[8][8]])
+    return quadrante
 
+def Preenchendo_Quadrantes(tabuleiro_data, x2, y2):
+    quadrante_preenchido = True
+    loop = 0 
+    try_count = 0
+    numero = 1
+    while quadrante_preenchido == True:
+        x = random.randint(x2, x2 +2)
+        y = random.randint(y2, y2 +2)
+        linha_sorteada = Linha_Escolhida(tabuleiro_data, y)
+        coluna_sorteada = Coluna_Escolhida(tabuleiro_data, x)
+        quadrante = Quadrante_Selecionado(tabuleiro_data, x, y)
+        if tabuleiro_data[y][x] == 'n' and numero not in linha_sorteada and numero not in coluna_sorteada and numero not in quadrante:
+            tabuleiro_data[y][x] = numero
+            numero += 1
+        loop += 1
+        if loop == 50:
+            tabuleiro_data[y2][x2] = 'n'     
+            tabuleiro_data[y2][x2 + 1] = 'n'     
+            tabuleiro_data[y2][x2 + 2] = 'n'     
+            tabuleiro_data[y2 + 1][x2] = 'n'     
+            tabuleiro_data[y2 +1][x2 + 1] = 'n'        
+            tabuleiro_data[y2 +1][x2 + 2] = 'n'        
+            tabuleiro_data[y2 +2][x2] = 'n'        
+            tabuleiro_data[y2 +2][x2 + 1] = 'n'        
+            tabuleiro_data[y2 +2][x2 + 2] = 'n'
+            loop = 0
+            numero = 1
+            try_count += 1
+        if try_count == 10:
+            break
+        count = 0
+        for n in range(9):
+            if quadrante[n] != 'n':
+                count +=1
+        if count == 9:
+            quadrante_preenchido = False
+    return tabuleiro_data
 
+def Reiniciando_Tabuleiro_Data(tabuleiro_data):
+    tabuleiro_data = [['n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n'],
+                     ['n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n'],
+                     ['n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n'],
+                     ['n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n'],
+                     ['n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n'],
+                     ['n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n'],
+                     ['n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n'],
+                     ['n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n'],
+                     ['n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n']]
+    return tabuleiro_data
+
+def Gabarito_do_Tabuleiro(tabuleiro_data, tabuleiro_preenchido):
+    while tabuleiro_preenchido == True:
+        # Quadrante 1
+        tabuleiro_data = Preenchendo_Quadrantes(tabuleiro_data, 0, 0)
+        # Quadrante 2
+        tabuleiro_data = Preenchendo_Quadrantes(tabuleiro_data, 3, 0)
+        # Quadrante 3
+        tabuleiro_data = Preenchendo_Quadrantes(tabuleiro_data, 6, 0)
+        # Quadrante 4
+        tabuleiro_data = Preenchendo_Quadrantes(tabuleiro_data, 0, 3)
+        # Quadrante 7
+        tabuleiro_data = Preenchendo_Quadrantes(tabuleiro_data, 0, 6)
+        # Quadrante 5
+        tabuleiro_data = Preenchendo_Quadrantes(tabuleiro_data, 3, 3)
+        # Quadrante 8
+        tabuleiro_data = Preenchendo_Quadrantes(tabuleiro_data, 3, 6)
+        # Quadrante 6
+        tabuleiro_data = Preenchendo_Quadrantes(tabuleiro_data, 6, 3)
+        # Quadrante 9
+        tabuleiro_data = Preenchendo_Quadrantes(tabuleiro_data, 6, 6)
+        for nn in range(9):
+            for n in range(9):
+                if tabuleiro_data[nn][n] == 'n':
+                    tabuleiro_data = Reiniciando_Tabuleiro_Data(tabuleiro_data)
+        count = 0
+        for nn in range(9):
+            for n in range(9):
+                if tabuleiro_data[nn][n] != 'n':
+                    count += 1
+        if count == 81:
+            tabuleiro_preenchido = False
+    return tabuleiro_data, tabuleiro_preenchido
+
+def Escondendo_Numeros(tabuleiro_data, jogo_data, escondendo_nuemros):
+    if escondendo_nuemros == True:
+        for n in range(40):
+            sorteando_numero = True
+            while sorteando_numero == True:
+                x = random.randint(0, 8)
+                y = random.randint(0, 8)
+                if jogo_data[y][x] == 'n':
+                    jogo_data[y][x] = tabuleiro_data[y][x]
+                    sorteando_numero = False
+        escondendo_nuemros = False
+    return jogo_data, escondendo_nuemros
+
+def Escrevendo_Numeros(window, jogo_data):
+    quadrado = 66.7
+    ajuste = 67
+    for nn in range(9):
+        for n in range(9):
+            if jogo_data[nn][n] != 'n':
+                palavra = font.render(str(jogo_data[nn][n]), True, preto)
+                window.blit(palavra, (ajuste + n * quadrado, ajuste - 5 + nn * quadrado))
+                if jogo_data[nn][n] == 'X':
+                    palavra = font.render(str(jogo_data[nn][n]), True, vermelho)
+                    window.blit(palavra, (ajuste + n * quadrado, ajuste - 5 + nn * quadrado)) 
+                    
+def Digiando_Numero(numero):
+    try:
+        numero = int(numero[1])
+    except:
+        numero = int(numero)
+    return numero
+
+def Checando_Numero_Digitado(tabuleiro_data, jogo_data, click_position_x, click_position_y, numero):
+    x = click_position_x
+    y = click_position_y
+    if x >= 0 and x <= 8 and y >= 0 and y <= 8 and tabuleiro_data[y][x] == numero and jogo_data[y][x] == 'n' and numero != 0:
+        jogo_data[y][x] = numero
+        numero = 0
+    if x >+ 0 and x <+ 8 and y >= 0 and y <= 8 and tabuleiro_data[y][x] == numero and jogo_data[y][x] == numero and numero != 0:
+        pass
+    if x >+ 0 and x <+ 8 and y >= 0 and y <= 8 and tabuleiro_data[y][x] != numero and jogo_data[y][x] == 'n' and numero != 0:
+        jogo_data[y][x] = 'X'
+        numero = 0
+    if x >+ 0 and x <+ 8 and y >= 0 and y <= 8 and tabuleiro_data[y][x] == numero and jogo_data[y][x] == 'X' and numero != 0:
+        jogo_data[y][x] = 'numero'
+        numero = 0
+    return jogo_data, numero
+      
+def Click_Botao_Restart(mouse_position_x, mouse_position_y, click_last_status, click, tabuleiro_preenchido, escondendo_numeros, tabuleiro_data, jogo_data):
+    x = mouse_position_x
+    y = mouse_position_y
+    if x >= 700 and x <= 950 and y >= 50 and y <= 150 and click_last_status == False and click == True:
+        tabuleiro_preenchido = True
+        escondendo_numeros = True
+        tabuleiro_data = Reiniciando_Tabuleiro_Data(tabuleiro_data)
+        jogo_data = Reiniciando_Tabuleiro_Data(jogo_data)
+    return tabuleiro_preenchido, escondendo_numeros, tabuleiro_data, jogo_data    
+         
 while True:
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -130,10 +290,15 @@ while True:
 
     # Jogo
     Tabuleiro_Hover(window, mouse_position_x, mouse_position_y)
-    click_position_x, click_position_y = Celula_Selecionada(window, mouse_position_x, mouse_position_y, click_last_status, click[0],
-    click_position_x, click_position_y)
+    click_position_x, click_position_y = Celula_Selecionada(window, mouse_position_x, mouse_position_y, click_last_status, click[0],click_position_x, click_position_y)
     Tabuleiro(window)
     Botao_Restart(window)
+    tabuleiro_data, tabuleiro_preenchido = Gabarito_do_Tabuleiro(tabuleiro_data, tabuleiro_preenchido)
+    jogo_data, escondendo_numeros = Escondendo_Numeros(tabuleiro_data, jogo_data, escondendo_numeros)
+    Escrevendo_Numeros(window, jogo_data)
+    numero = Digiando_Numero(numero)
+    jogo_data, numero = Checando_Numero_Digitado(tabuleiro_data, jogo_data, click_position_x, click_position_y, numero)
+    tabuleiro_preenchido, escondendo_numeros, tabuleiro_data, jogo_data = Click_Botao_Restart(mouse_position_x, mouse_position_y, click_last_status, click[0], tabuleiro_preenchido, escondendo_numeros, tabuleiro_data, jogo_data)
 
     # Click Last Status
     if click[0] == True:
